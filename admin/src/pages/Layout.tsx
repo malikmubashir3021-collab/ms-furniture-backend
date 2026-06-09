@@ -1,10 +1,11 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { LayoutDashboard, Package, LogOut } from 'lucide-react'
+import { LayoutDashboard, Package, UserPlus, LogOut } from 'lucide-react'
 
 const links = [
   { to: '/admin', icon: LayoutDashboard, label: 'Dashboard', end: true },
   { to: '/admin/products', icon: Package, label: 'Products', end: false },
+  { to: '/admin/admins', icon: UserPlus, label: 'Admins', end: false },
 ]
 
 export default function Layout() {

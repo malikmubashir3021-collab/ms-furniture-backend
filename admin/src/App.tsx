@@ -4,6 +4,7 @@ import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import Products from './pages/Products'
 import ProductForm from './pages/ProductForm'
+import CreateAdmin from './pages/CreateAdmin'
 import Layout from './pages/Layout'
 
 function Protected({ children }: { children: React.ReactNode }) {
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="products" element={<Products />} />
         <Route path="products/new" element={<ProductForm />} />
         <Route path="products/:id/edit" element={<ProductForm />} />
+        <Route path="admins" element={<CreateAdmin />} />
       </Route>
       <Route path="*" element={<Navigate to="/admin" replace />} />
     </Routes>

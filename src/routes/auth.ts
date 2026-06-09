@@ -1,7 +1,7 @@
 import { Router, Response } from 'express'
 import bcrypt from 'bcryptjs'
 import { getDb } from '../db.js'
-import { generateToken } from '../midware/auth.js'
+import { generateToken, authMiddleware, AuthRequest } from '../midware/auth.js'
 
 const router = Router()
 
@@ -28,6 +28,26 @@ router.post('/login', async (req, res: Response) => {
   }
   const token = generateToken(user.id)
   res.json({ token, username: user.username })
+})
+
+router.post('/register', authMiddleware, async (req: AuthRequest, res: Response) => {
+  const { username, password } = req.body
+  if (!username || !password) {
+    return res.status(400).json({ error: 'Username and password required' })
+  }
+  if (password.length < 6) {
+    return res.status(400).json({ error: 'Password must be at least 6 characters' })
+  }
+  const db = await getDb()
+
+  const exists = db.exec(`SELECT id FROM users WHERE username = '${username.replace(/'/g, "''")}'`)
+  if (exists.length > 0 && exists[0].values.length > 0) {
+    return res.status(409).json({ error: 'Username already exists' })
+  }
+
+  const hash = bcrypt.hashSync(password, 10)
+  db.run('INSERT INTO users (username, password) VALUES (?, ?)', [username, hash])
+  res.json({ success: true, message: 'Admin created' })
 })
 
 export default router
