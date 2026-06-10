@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { api, apiUrl } from '../api'
+import { api } from '../api'
+import { ArrowLeft } from 'lucide-react'
 
 const CATEGORIES = ['Coffee Tables', 'Coffee Sets', 'Sofa Set', 'Bed Set']
 
@@ -72,75 +73,94 @@ export default function ProductForm() {
   }
 
   return (
-    <div className="max-w-2xl">
-      <h1 className="text-xl font-light text-stone-200 mb-6">{isEdit ? 'Edit Product' : 'New Product'}</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-stone-500 text-xs tracking-wider uppercase mb-1">Name</label>
-            <input value={form.name} onChange={set('name')} required className="w-full bg-jet-light border border-stone-700 text-stone-200 px-3 py-2.5 text-sm focus:outline-none focus:border-gold/50" />
-          </div>
-          <div>
-            <label className="block text-stone-500 text-xs tracking-wider uppercase mb-1">Category</label>
-            <select value={form.category} onChange={set('category')} className="w-full bg-jet-light border border-stone-700 text-stone-200 px-3 py-2.5 text-sm focus:outline-none focus:border-gold/50">
-              {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
-            </select>
-          </div>
-        </div>
+    <div>
+      <div className="flex items-center gap-4 mb-6">
+        <button onClick={() => navigate('/admin/products')} className="p-2 text-text-muted hover:text-text-primary hover:bg-gray-100 rounded-md transition-colors">
+          <ArrowLeft size={18} />
+        </button>
         <div>
-          <label className="block text-stone-500 text-xs tracking-wider uppercase mb-1">Description</label>
-          <textarea value={form.description} onChange={set('description')} rows={3} className="w-full bg-jet-light border border-stone-700 text-stone-200 px-3 py-2.5 text-sm focus:outline-none focus:border-gold/50" />
+          <h1 className="text-xl font-semibold text-text-primary">{isEdit ? 'Edit Product' : 'Add Product'}</h1>
+          <p className="text-text-secondary text-sm mt-0.5">
+            {isEdit ? 'Update product details' : 'Create a new product'}
+          </p>
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-stone-500 text-xs tracking-wider uppercase mb-1">Material</label>
-            <input value={form.material} onChange={set('material')} className="w-full bg-jet-light border border-stone-700 text-stone-200 px-3 py-2.5 text-sm focus:outline-none focus:border-gold/50" />
+      </div>
+
+      <form onSubmit={handleSubmit} className="max-w-3xl">
+        <div className="shopify-card p-6 space-y-5">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="shopify-label">Product Name</label>
+              <input value={form.name} onChange={set('name')} required className="shopify-input" placeholder="e.g. Premium Coffee Table" />
+            </div>
+            <div>
+              <label className="shopify-label">Category</label>
+              <select value={form.category} onChange={set('category')} className="shopify-select">
+                {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+              </select>
+            </div>
           </div>
+
           <div>
-            <label className="block text-stone-500 text-xs tracking-wider uppercase mb-1">Finishing</label>
-            <input value={form.finishing} onChange={set('finishing')} className="w-full bg-jet-light border border-stone-700 text-stone-200 px-3 py-2.5 text-sm focus:outline-none focus:border-gold/50" />
+            <label className="shopify-label">Description</label>
+            <textarea value={form.description} onChange={set('description')} rows={3} className="shopify-input" placeholder="Product description..." />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="shopify-label">Material</label>
+              <input value={form.material} onChange={set('material')} className="shopify-input" placeholder="e.g. Solid Wood" />
+            </div>
+            <div>
+              <label className="shopify-label">Finishing</label>
+              <input value={form.finishing} onChange={set('finishing')} className="shopify-input" placeholder="e.g. Polished" />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="shopify-label">Dimensions</label>
+              <input value={form.sizing} onChange={set('sizing')} className="shopify-input" placeholder='e.g. 48" × 30" × 17"' />
+            </div>
+            <div>
+              <label className="shopify-label">Color Scheme</label>
+              <input value={form.color_scheme} onChange={set('color_scheme')} className="shopify-input" placeholder="e.g. Walnut Brown" />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="shopify-label">Top Type</label>
+              <input value={form.top_type} onChange={set('top_type')} className="shopify-input" placeholder="e.g. Marble Top" />
+            </div>
+            <div>
+              <label className="shopify-label">Model Number</label>
+              <input value={form.model_number} onChange={set('model_number')} className="shopify-input" placeholder="e.g. MT-101" />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="shopify-label">Badge</label>
+              <select value={form.badge} onChange={set('badge')} className="shopify-select">
+                <option value="">None</option>
+                <option value="new">New</option>
+                <option value="best-seller">Best Seller</option>
+              </select>
+            </div>
+            <div>
+              <label className="shopify-label">Image Path</label>
+              <input value={form.image} onChange={set('image')} className="shopify-input" placeholder="/images/1.webp" />
+            </div>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-stone-500 text-xs tracking-wider uppercase mb-1">Dimensions</label>
-            <input value={form.sizing} onChange={set('sizing')} placeholder='e.g. 48" × 30" × 17"' className="w-full bg-jet-light border border-stone-700 text-stone-200 px-3 py-2.5 text-sm focus:outline-none focus:border-gold/50" />
-          </div>
-          <div>
-            <label className="block text-stone-500 text-xs tracking-wider uppercase mb-1">Color Scheme</label>
-            <input value={form.color_scheme} onChange={set('color_scheme')} className="w-full bg-jet-light border border-stone-700 text-stone-200 px-3 py-2.5 text-sm focus:outline-none focus:border-gold/50" />
-          </div>
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-stone-500 text-xs tracking-wider uppercase mb-1">Top Type</label>
-            <input value={form.top_type} onChange={set('top_type')} className="w-full bg-jet-light border border-stone-700 text-stone-200 px-3 py-2.5 text-sm focus:outline-none focus:border-gold/50" />
-          </div>
-          <div>
-            <label className="block text-stone-500 text-xs tracking-wider uppercase mb-1">Model Number</label>
-            <input value={form.model_number} onChange={set('model_number')} className="w-full bg-jet-light border border-stone-700 text-stone-200 px-3 py-2.5 text-sm focus:outline-none focus:border-gold/50" />
-          </div>
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-stone-500 text-xs tracking-wider uppercase mb-1">Badge</label>
-            <select value={form.badge} onChange={set('badge')} className="w-full bg-jet-light border border-stone-700 text-stone-200 px-3 py-2.5 text-sm focus:outline-none focus:border-gold/50">
-              <option value="">None</option>
-              <option value="new">New</option>
-              <option value="best-seller">Best Seller</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-stone-500 text-xs tracking-wider uppercase mb-1">Image Path</label>
-            <input value={form.image} onChange={set('image')} placeholder="/images/1.webp" className="w-full bg-jet-light border border-stone-700 text-stone-200 px-3 py-2.5 text-sm focus:outline-none focus:border-gold/50" />
-          </div>
-        </div>
-        <div className="flex gap-3 pt-2">
-          <button type="submit" disabled={saving} className="bg-gold text-jet text-xs tracking-wider uppercase font-medium px-6 py-3 rounded hover:bg-gold-light transition-colors disabled:opacity-50">
-            {saving ? 'Saving...' : isEdit ? 'Update Product' : 'Create Product'}
-          </button>
-          <button type="button" onClick={() => navigate('/admin/products')} className="border border-stone-700 text-stone-400 text-xs tracking-wider uppercase px-6 py-3 rounded hover:text-stone-200 transition-colors">
+
+        <div className="flex items-center justify-between mt-6">
+          <button type="button" onClick={() => navigate('/admin/products')} className="shopify-btn-secondary">
             Cancel
+          </button>
+          <button type="submit" disabled={saving} className="shopify-btn-primary">
+            {saving ? 'Saving...' : isEdit ? 'Update Product' : 'Create Product'}
           </button>
         </div>
       </form>

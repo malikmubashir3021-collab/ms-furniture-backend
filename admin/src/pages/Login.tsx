@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { Store } from 'lucide-react'
 
 export default function Login() {
   const [username, setUsername] = useState('')
@@ -21,28 +22,40 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-jet flex items-center justify-center px-4">
+    <div className="min-h-screen bg-page flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
-        <div className="text-center mb-8">
-          <h1 className="text-gold text-2xl font-light tracking-wider mb-2">MS Furniture</h1>
-          <p className="text-stone-500 text-xs tracking-widest uppercase">Admin Panel</p>
+        <div className="shopify-card p-8 shadow-sm">
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-12 h-12 bg-shopify/10 rounded-full mb-4">
+              <Store size={24} className="text-shopify" />
+            </div>
+            <h1 className="text-xl font-semibold text-text-primary">MS Furniture</h1>
+            <p className="text-text-secondary text-sm mt-1">Sign in to your admin panel</p>
+          </div>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="shopify-label">Username</label>
+              <input
+                type="text" value={username} onChange={e => setUsername(e.target.value)}
+                placeholder="Enter your username"
+                className="shopify-input"
+              />
+            </div>
+            <div>
+              <label className="shopify-label">Password</label>
+              <input
+                type="password" value={password} onChange={e => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                className="shopify-input"
+              />
+            </div>
+            {error && <p className="text-red-500 text-sm bg-red-50 border border-red-100 rounded px-3 py-2">{error}</p>}
+            <button type="submit" className="shopify-btn-primary w-full">
+              Sign In
+            </button>
+          </form>
         </div>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="text" value={username} onChange={e => setUsername(e.target.value)}
-            placeholder="Username"
-            className="w-full bg-jet-light border border-stone-700 text-stone-200 px-4 py-3 text-sm focus:outline-none focus:border-gold/50"
-          />
-          <input
-            type="password" value={password} onChange={e => setPassword(e.target.value)}
-            placeholder="Password"
-            className="w-full bg-jet-light border border-stone-700 text-stone-200 px-4 py-3 text-sm focus:outline-none focus:border-gold/50"
-          />
-          {error && <p className="text-red-400 text-xs">{error}</p>}
-          <button type="submit" className="w-full bg-gold text-jet text-sm tracking-widest uppercase font-medium py-3 hover:bg-gold-light transition-colors">
-            Sign In
-          </button>
-        </form>
+        <p className="text-center text-text-muted text-xs mt-6">MS Furniture Store Admin Panel</p>
       </div>
     </div>
   )

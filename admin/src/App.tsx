@@ -9,7 +9,7 @@ import Layout from './pages/Layout'
 
 function Protected({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth()
-  if (loading) return <div className="flex items-center justify-center min-h-screen bg-jet"><div className="w-6 h-6 border border-gold/30 border-t-gold rounded-full animate-spin" /></div>
+  if (loading) return <div className="flex items-center justify-center min-h-screen bg-page"><div className="w-6 h-6 border-2 border-shopify/30 border-t-shopify rounded-full animate-spin" /></div>
   if (!user) return <Navigate to="/admin/login" replace />
   return <>{children}</>
 }

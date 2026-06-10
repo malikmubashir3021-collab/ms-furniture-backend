@@ -2,4 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
-body { font-family: 'Inter', sans-serif; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer components {
+  .shopify-input {
+    @apply w-full border border-page-border rounded px-3 py-2 text-sm text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-shopify focus:ring-1 focus:ring-shopify/20 transition-colors;
+  }
+  .shopify-select {
+    @apply w-full border border-page-border rounded px-3 py-2 text-sm text-text-primary bg-white focus:outline-none focus:border-shopify focus:ring-1 focus:ring-shopify/20 transition-colors;
+  }
+  .shopify-btn-primary {
+    @apply bg-shopify text-white text-sm font-medium px-5 py-2.5 rounded hover:bg-shopify-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .shopify-btn-secondary {
+    @apply border border-page-border text-text-primary text-sm font-medium px-5 py-2.5 rounded hover:bg-gray-50 transition-colors;
+  }
+  .shopify-card {
+    @apply bg-page-card border border-page-border rounded-lg;
+  }
+  .shopify-label {
+    @apply block text-text-secondary text-xs font-medium tracking-wide uppercase mb-1.5;
+  }
+}
